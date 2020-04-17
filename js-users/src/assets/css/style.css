@@ -1,0 +1,8 @@
+.table td {
+  padding: 0.45rem;
+  text-align: center;
+}
+
+.table .thead-dark th {
+  text-align: center;
+}
