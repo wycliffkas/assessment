@@ -1,7 +1,7 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-const Pagination = ({ usersPerPage, totalUsers, paginate, currentPage }) => {
+const Pagination = ({ usersPerPage, totalUsers, paginate }) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
@@ -13,7 +13,6 @@ const Pagination = ({ usersPerPage, totalUsers, paginate, currentPage }) => {
       previousLabel={"previous"}
       nextLabel={"next"}
       breakLabel={"..."}
-      breakClassName={"break-me"}
       pageCount={pageNumbers.length}
       marginPagesDisplayed={2}
       pageRangeDisplayed={10}

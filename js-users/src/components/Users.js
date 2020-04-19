@@ -1,39 +1,49 @@
 import React from "react";
-import Loader from "../utils/Loader";
 import { Link } from "react-router-dom";
-const Users = ({ users, loading }) => {
+import dateFormator from "./../utils/dateFormator";
+
+const Users = ({ users, onUpdateUserStatus }) => {
   return (
     <div>
-      {loading ? (
-        <Loader />
-      ) : (
-        <table className="table table-bordered table-striped">
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Created</th>
-              <th />
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
+      <h4 className="center-text">Users</h4>
+      <table className="table table-bordered table-striped">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Created</th>
+            <th />
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {users &&
+            users.map((user) => (
               <tr key={user.id}>
-                <td>{user.first_name}</td>
-                <td>{user.last_name}</td>
-                <td>{user.created_at}</td>
+                <td className={user.status === "locked" ? "strike" : null}>
+                  {user.first_name}
+                </td>
+                <td className={user.status === "locked" ? "strike" : null}>
+                  {user.last_name}
+                </td>
+                <td className={user.status === "locked" ? "strike" : null}>
+                  {dateFormator(user.created_at)}
+                </td>
                 <td>
-                  <Link to="/">Activate</Link>
+                  <Link
+                    to="/"
+                    onClick={() => onUpdateUserStatus(user.id, user.status)}
+                  >
+                    {user.status === "locked" ? "Activate" : "Lock"}
+                  </Link>
                 </td>
                 <td>
                   <Link to="/">Edit</Link>
                 </td>
               </tr>
             ))}
-          </tbody>
-        </table>
-      )}
+        </tbody>
+      </table>
     </div>
   );
 };

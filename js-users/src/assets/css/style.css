@@ -6,3 +6,11 @@
 .table .thead-dark th {
   text-align: center;
 }
+
+.strike {
+  text-decoration: line-through;
+}
+
+.center-text {
+  text-align: center;
+}

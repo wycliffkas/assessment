@@ -3,6 +3,7 @@ import axios from "axios";
 import Users from "./components/Users";
 import Pagination from "./components/Pagination";
 import Loader from "./utils/Loader";
+import fetchUsers from "./utils/fetchUsers";
 import "./assets/css/style.css";
 
 const App = () => {
@@ -11,22 +12,45 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
 
-  const fetchUsers = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        "http://js-assessment-backend.herokuapp.com/users.json"
-      );
-      setUsers(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
   useEffect(() => {
-    fetchUsers();
+    fetchUsers(setUsers, setLoading);
   }, []);
+
+  const updateUserStatus = async (userId, status) => {
+    let data = null;
+    if (status === "active") {
+      data = {
+        status: "locked",
+      };
+    } else {
+      data = {
+        status: "active",
+      };
+    }
+
+    await axios({
+      method: "PUT",
+      mode: "CORS",
+      url: `http://js-assessment-backend.herokuapp.com/users/${userId}.json`,
+      data,
+    })
+      .then((res) => {
+        console.log("successfully updated");
+      })
+      .catch((err) => console.log(err));
+
+    for (let user of users) {
+      if (user.id === userId) {
+        status === "active"
+          ? (user.status = "locked")
+          : (user.status = "active");
+        break;
+      }
+    }
+
+    setUsers([]);
+    setUsers(users);
+  };
 
   const indexOfLastPost = currentPage * usersPerPage;
   const indexOfFirstPost = indexOfLastPost - usersPerPage;
@@ -35,12 +59,12 @@ const App = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber.selected + 1);
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-3">
       {loading ? (
         <Loader />
       ) : (
         <React.Fragment>
-          <Users users={currentUsers} loading={loading} />
+          <Users users={currentUsers} onUpdateUserStatus={updateUserStatus} />
           <Pagination
             usersPerPage={usersPerPage}
             totalUsers={users.length}
