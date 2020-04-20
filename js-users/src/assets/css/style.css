@@ -13,4 +13,56 @@
 
 .center-text {
   text-align: center;
+  color: #007bff;
+}
+
+.link-button {
+  border: 1px solid #007bff;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 35px;
+}
+
+.form-control {
+  border: 2px solid #007bff;
+}
+
+label {
+  color: #0062cc;
+}
+
+.Toastify__toast-body {
+  color: #343a40;
+  font-size: 18px;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 14px;
+}
+
+.btn-table {
+  margin-right: 10px;
+  width: 100px;
+  padding: 0 0;
+}
+
+.navbar-nav {
+  padding-left: 150px;
+  font-size: 18px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: black;
+}
+
+.nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #ffffff;
 }
